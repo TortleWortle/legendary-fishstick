@@ -23,46 +23,17 @@ set -eoux pipefail
 # shellcheck source=/dev/null
 source /ctx/build/copr-helpers.sh
 
-echo "::group:: Remove GNOME Desktop"
-
-# Remove GNOME Shell and related packages
-dnf5 remove -y \
-  gnome-shell \
-  gnome-shell-extension* \
-  gnome-terminal \
-  gnome-software \
-  gnome-control-center \
-  nautilus \
-  gdm
-
-echo "GNOME desktop removed"
-echo "::endgroup::"
-
 # Install COSMIC desktop from System76's COPR
 # Using isolated pattern to prevent COPR from persisting
 copr_install_isolated "avengemedia/dms" \
-  niri \
   dms
+
+dnf5 install -y niri
 
 systemctl --user add-wants niri.service dms
 
-# Set NIRI as default session
-mkdir -p /etc/X11/sessions
-cat >/etc/X11/sessions/niri.desktop <<'NIRIDESKTOP'
-[Desktop Entry]
-Name=NIRI
-Comment=NIRI Desktop Environment
-Exec=niri-session
-Type=Application
-DesktopNames=NIRI
-NIRIDESKTOP
-
-echo "Display manager configured"
-echo "::endgroup::"
-
 echo "::group:: Install Additional Utilities"
 
-# Install additional utilities that work well with COSMIC
 dnf5 install -y \
   kitty \
   flatpak \

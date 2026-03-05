@@ -46,8 +46,7 @@ COPY --from=ghcr.io/ublue-os/brew:latest@sha256:ca91068f51ce663d495ccfc829352d66
 
 # Base Image - GNOME included
 # FROM ghcr.io/ublue-os/silverblue-main:latest@sha256:f8d5fd28aa7bb0ed9e17e98e4f9fb174b6961a2dc4a3113b78c5dff4af5bdf6f
-FROM ghcr.io/projectbluefin/bluefin-dx-nvidia-open:stable
-
+FROM ghcr.io/ublue-os/bluefin-dx:stable
 ## Alternative base images, no desktop included (uncomment to use):
 # FROM ghcr.io/ublue-os/base-main:latest    
 # FROM quay.io/centos-bootc/centos-bootc:stream10
@@ -82,6 +81,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build/build.sh
+
     
 ### LINTING
 ## Verify final image and contents are correct.
