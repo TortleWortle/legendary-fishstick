@@ -27,52 +27,35 @@ echo "::group:: Remove GNOME Desktop"
 
 # Remove GNOME Shell and related packages
 dnf5 remove -y \
-    gnome-shell \
-    gnome-shell-extension* \
-    gnome-terminal \
-    gnome-software \
-    gnome-control-center \
-    nautilus \
-    gdm
+  gnome-shell \
+  gnome-shell-extension* \
+  gnome-terminal \
+  gnome-software \
+  gnome-control-center \
+  nautilus \
+  gdm
 
 echo "GNOME desktop removed"
 echo "::endgroup::"
 
-echo "::group:: Install COSMIC Desktop"
-
 # Install COSMIC desktop from System76's COPR
 # Using isolated pattern to prevent COPR from persisting
-copr_install_isolated "ryanabx/cosmic-epoch" \
-    cosmic-session \
-    cosmic-greeter \
-    cosmic-comp \
-    cosmic-panel \
-    cosmic-launcher \
-    cosmic-applets \
-    cosmic-settings \
-    cosmic-files \
-    cosmic-edit \
-    cosmic-term \
-    cosmic-workspaces
+copr_install_isolated "avengemedia/dms" \
+  niri \
+  dms
 
-echo "COSMIC desktop installed successfully"
-echo "::endgroup::"
+systemctl --user add-wants niri.service dms
 
-echo "::group:: Configure Display Manager"
-
-# Enable cosmic-greeter (COSMIC's display manager)
-systemctl enable cosmic-greeter
-
-# Set COSMIC as default session
+# Set NIRI as default session
 mkdir -p /etc/X11/sessions
-cat > /etc/X11/sessions/cosmic.desktop << 'COSMICDESKTOP'
+cat >/etc/X11/sessions/niri.desktop <<'NIRIDESKTOP'
 [Desktop Entry]
-Name=COSMIC
-Comment=COSMIC Desktop Environment
-Exec=cosmic-session
+Name=NIRI
+Comment=NIRI Desktop Environment
+Exec=niri-session
 Type=Application
-DesktopNames=COSMIC
-COSMICDESKTOP
+DesktopNames=NIRI
+NIRIDESKTOP
 
 echo "Display manager configured"
 echo "::endgroup::"
@@ -81,12 +64,14 @@ echo "::group:: Install Additional Utilities"
 
 # Install additional utilities that work well with COSMIC
 dnf5 install -y \
-    kitty \
-    flatpak \
-    xdg-desktop-portal-cosmic
+  kitty \
+  flatpak \
+  xdg-desktop-portal-gtk \
+  xdg-desktop-portal-gnome \
+  gnome-keyring
 
 echo "Additional utilities installed"
 echo "::endgroup::"
 
-echo "COSMIC desktop installation complete!"
-echo "After booting, select 'COSMIC' session at the login screen"
+echo "NIRI desktop installation complete!"
+echo "After booting, select 'NIRI' session at the login screen"

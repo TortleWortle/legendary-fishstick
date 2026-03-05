@@ -2,10 +2,10 @@
 # Uncomment packages you want to install
 
 # Container and orchestration tools
-# brew "kind"           # Kubernetes in Docker
-# brew "kubectl"        # Kubernetes CLI
-# brew "k9s"            # Kubernetes TUI
-# brew "helm"           # Kubernetes package manager
+ brew "kind"           # Kubernetes in Docker
+ brew "kubectl"        # Kubernetes CLI
+ brew "k9s"            # Kubernetes TUI
+ brew "helm"           # Kubernetes package manager
 
 # Cloud tools
 # brew "awscli"         # AWS CLI
@@ -24,3 +24,9 @@
 # Debugging and profiling
 # brew "gdb"            # GNU debugger
 # brew "valgrind"       # Memory debugging tool
+
+brew "asdf"
+
+tap "siderolabs/tap"
+brew "siderolabs/tap/talosctl"
+brew "jj"
