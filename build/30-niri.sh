@@ -23,12 +23,8 @@ set -eoux pipefail
 # shellcheck source=/dev/null
 source /ctx/build/copr-helpers.sh
 
-# Install COSMIC desktop from System76's COPR
-# Using isolated pattern to prevent COPR from persisting
-copr_install_isolated "avengemedia/dms" \
-  dms
-
-dnf5 install -y niri
+dnf5 copr enable -y avengemedia/dms
+dnf5 install -y niri dms
 
 systemctl --user add-wants niri.service dms
 
