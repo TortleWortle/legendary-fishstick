@@ -24,7 +24,8 @@ set -eoux pipefail
 source /ctx/build/copr-helpers.sh
 
 dnf5 copr enable -y avengemedia/dms
-dnf5 install -y niri dms
+dnf5 copr enable -y avengemedia/danklinux
+dnf5 install -y niri dms dms-greeter
 
 systemctl --user add-wants niri.service dms
 
